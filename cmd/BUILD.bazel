@@ -1,0 +1,27 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "cmd_lib",
+    srcs = ["evaluate.go"],
+    importpath = "github.com/michaelboulton/starlark_config_example/cmd",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//proto/github.com/michaelboulton/starlark_config_example/v1:starlark_config_example",  # keep
+        "@com_github_golang_protobuf//proto:go_default_library",
+        "@com_github_pkg_errors//:errors",
+        "@com_github_stripe_skycfg//:skycfg",
+        "@in_gopkg_yaml_v2//:yaml_v2",
+        "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+        "@io_bazel_rules_go//proto/wkt:wrappers_go_proto",
+        "@org_golang_google_protobuf//encoding/protojson",
+    ],
+)
+
+go_binary(
+    name = "cmd",
+    data = [
+        "//cfg:prometheus.bzl",
+    ],
+    embed = [":cmd_lib"],
+    visibility = ["//visibility:public"],
+)

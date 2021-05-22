@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package github.com.michaelboulton.starlark_config_example.v1;
+
+option go_package = "github.com/michaelboulton/starlark_config_example/v1";
+
+message RelabelConfig {
+  repeated string source_labels = 1;
+  string target_label = 2;
+  string regex = 3;
+  string replacement = 4;
+}
+
+message GlobalConfig {
+  int64  scrape_interval_seconds = 1;
+}
+
+message ScrapeConfig {
+  string job = 1;
+  string metrics_path = 2;
+  repeated RelabelConfig metric_relabel_configs = 3;
+}
+
+message WholeConfig {
+  GlobalConfig global_config = 1;
+  repeated ScrapeConfig  scrape_config = 2;
+}
