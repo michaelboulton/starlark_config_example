@@ -7,13 +7,14 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "//proto/github.com/michaelboulton/starlark_config_example/v1:starlark_config_example",  # keep
+        "@com_github_argoproj_argo_workflows_v3//pkg/apiclient/workflowtemplate:go_default_library",
+        "@com_github_argoproj_argo_workflows_v3//pkg/apis/workflow/v1alpha1:go_default_library",
         "@com_github_golang_protobuf//proto:go_default_library",
         "@com_github_pkg_errors//:errors",
         "@com_github_stripe_skycfg//:skycfg",
-        "@in_gopkg_yaml_v2//:yaml_v2",
+        "@in_gopkg_yaml_v3//:yaml_v3",
         "@io_bazel_rules_go//go/tools/bazel:go_default_library",
         "@io_bazel_rules_go//proto/wkt:wrappers_go_proto",
-        "@org_golang_google_protobuf//encoding/protojson",
     ],
 )
 

@@ -8,10 +8,13 @@ import (
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
 	"github.com/golang/protobuf/proto"
 	_ "github.com/golang/protobuf/ptypes/wrappers"
-	_ "github.com/michaelboulton/starlark_config_example/v1"
 	"github.com/pkg/errors"
 	"github.com/stripe/skycfg"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
+
+	_ "github.com/argoproj/argo-workflows/v3/pkg/apiclient/workflowtemplate"
+	_ "github.com/argoproj/argo-workflows/v3/pkg/apis/workflow/v1alpha1"
+	_ "github.com/michaelboulton/starlark_config_example/v1"
 )
 
 func main() {

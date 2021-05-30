@@ -1,5 +1,16 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+#http_archive(
+#    name = "com_google_protobuf",
+#    sha256 = "eaba1dd133ac5167e8b08bc3268b2d33c6e9f2dcb14ec0f97f3d3eed9b395863",
+#    strip_prefix = "protobuf-3.17.0",
+#    urls = ["https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.17.0.tar.gz"],
+#)
+#
+#load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+#
+#protobuf_deps()
+
 http_archive(
     name = "rules_proto",
     sha256 = "602e7161d9195e50246177e7c55b2f39950a9cf7366f74ed5f22fd45750cd208",
@@ -38,13 +49,15 @@ http_archive(
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-load("//:deps.bzl", "go_dependencies")
-
-# gazelle:repository_macro deps.bzl%go_dependencies
-go_dependencies()
+load("//:deps.bzl", "go_dependencies", "override_dependencies")
 
 go_rules_dependencies()
 
 go_register_toolchains(version = "1.16")
+
+# gazelle:repository_macro deps.bzl%go_dependencies
+go_dependencies()
+
+override_dependencies()
 
 gazelle_dependencies()

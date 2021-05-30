@@ -1,5 +1,7 @@
 pb = proto.package("github.com.michaelboulton.starlark_config_example.v1")
 
+argopb = proto.package("github.com.argoproj.argo_workflows.v3.pkg.apis.workflow.v1alpha1")
+
 relabel = pb.RelabelConfig(
     source_labels = [
         "old_1",
@@ -29,4 +31,6 @@ def main(ctx):
         scrape_config = scrapes_cfg,
     )
 
-    return [cfg]
+    workflow = argopb.Workflow()
+
+    return [cfg, workflow]
