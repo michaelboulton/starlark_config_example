@@ -52,12 +52,17 @@ func run() error {
 		return errors.Wrap(err, "running file")
 	}
 
-	out, err := toYaml(proto2.MessageV2(messages[0]))
-	if err != nil {
-		return err
-	}
+	for _, m := range messages {
+		messageV2 := proto2.MessageV2(m)
 
-	fmt.Println(string(out))
+		out, err := toYaml(messageV2)
+		if err != nil {
+			return err
+		}
+
+		fmt.Println(messageV2.ProtoReflect().Descriptor().FullName())
+		fmt.Println(string(out))
+	}
 
 	return nil
 }
