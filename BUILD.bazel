@@ -1,4 +1,5 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
+# gazelle:exclude v1
 # gazelle:prefix github.com/michaelboulton/starlark_config_example
 gazelle(name = "gazelle")

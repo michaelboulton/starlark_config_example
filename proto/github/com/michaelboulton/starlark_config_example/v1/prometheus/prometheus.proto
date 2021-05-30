@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package github.com.michaelboulton.starlark_config_example.v1;
+package github.com.michaelboulton.starlark_config_example.v1.prometheus;
 
-option go_package = "github.com/michaelboulton/starlark_config_example/v1";
+option go_package = "github.com/michaelboulton/starlark_config_example/v1/prometheus";
 
 message RelabelConfig {
   repeated string source_labels = 1;

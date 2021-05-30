@@ -5,16 +5,18 @@ import (
 	"encoding/json"
 	"fmt"
 
+	_ "github.com/argoproj/argo-workflows/v3/pkg/apiclient/workflowtemplate"
+	"github.com/argoproj/argo-workflows/v3/pkg/apis/workflow/v1alpha1"
+	_ "github.com/argoproj/argo-workflows/v3/pkg/apis/workflow/v1alpha1"
 	"github.com/bazelbuild/rules_go/go/tools/bazel"
-	"github.com/golang/protobuf/proto"
-	_ "github.com/golang/protobuf/ptypes/wrappers"
+	proto2 "github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
 	"github.com/stripe/skycfg"
-	"gopkg.in/yaml.v3"
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/reflect/protoregistry"
+	"gopkg.in/yaml.v2"
 
-	_ "github.com/argoproj/argo-workflows/v3/pkg/apiclient/workflowtemplate"
-	_ "github.com/argoproj/argo-workflows/v3/pkg/apis/workflow/v1alpha1"
-	_ "github.com/michaelboulton/starlark_config_example/v1"
+	_ "github.com/michaelboulton/starlark_config_example/v1/prometheus"
 )
 
 func main() {
@@ -31,11 +33,18 @@ func run() error {
 	}
 
 	ctx := context.Background()
-	config, err := skycfg.Load(ctx, file,
+	config, err := skycfg.Load(
+		ctx,
+		file,
 		skycfg.WithGlobals(skycfg.UnstablePredeclaredModules(nil)),
 	)
 	if err != nil {
 		return errors.Wrap(err, "loading files")
+	}
+
+	err = RegisterGogoProtoType(&v1alpha1.Workflow{})
+	if err != nil {
+		return errors.Wrap(err, "")
 	}
 
 	messages, err := config.Main(ctx)
@@ -43,12 +52,22 @@ func run() error {
 		return errors.Wrap(err, "running file")
 	}
 
-	out, err := toYaml(messages[0])
+	out, err := toYaml(proto2.MessageV2(messages[0]))
 	if err != nil {
 		return err
 	}
 
 	fmt.Println(string(out))
+
+	return nil
+}
+
+func RegisterGogoProtoType(oldMessage proto2.Message) error {
+	message := proto2.MessageV2(oldMessage).ProtoReflect()
+	err := protoregistry.GlobalTypes.RegisterMessage(message.Type())
+	if err != nil {
+		return errors.Wrapf(err, "registering message %s", message.Descriptor().FullName())
+	}
 
 	return nil
 }

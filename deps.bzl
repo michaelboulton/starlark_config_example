@@ -2703,7 +2703,7 @@ def go_dependencies():
     )
     go_repository(
         name = "io_k8s_api",
-        build_file_proto_mode = "disable_global",
+        build_file_proto_mode = "disable",
         importpath = "k8s.io/api",
         replace = "k8s.io/api",
         sum = "h1:F3lfwgpKcKms6F1mMqkQXFzXmme8QqHTJBtBkev3TOg=",
@@ -2718,7 +2718,7 @@ def go_dependencies():
     )
     go_repository(
         name = "io_k8s_apimachinery",
-        build_file_proto_mode = "disable_global",
+        build_file_proto_mode = "disable",
         importpath = "k8s.io/apimachinery",
         replace = "k8s.io/apimachinery",
         sum = "h1:kBLzSGuDdY1NdSV2uFzI+FwZ9wtkmG+X3ZVcWXSqNgA=",
@@ -2726,7 +2726,7 @@ def go_dependencies():
     )
     go_repository(
         name = "io_k8s_apiserver",
-        build_file_proto_mode = "disable_global",
+        build_file_proto_mode = "disable",
         importpath = "k8s.io/apiserver",
         replace = "k8s.io/apiserver",
         sum = "h1:nRjEbEyX0diwAZT7GndrCUwX9OQw8v+CCHPZwYLBwK8=",

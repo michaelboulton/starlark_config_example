@@ -1,4 +1,4 @@
-pb = proto.package("github.com.michaelboulton.starlark_config_example.v1")
+pb = proto.package("github.com.michaelboulton.starlark_config_example.v1.prometheus")
 
 argopb = proto.package("github.com.argoproj.argo_workflows.v3.pkg.apis.workflow.v1alpha1")
 
